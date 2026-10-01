@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard dữ liệu và model</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <span class="brand">Penguin Classifier</span>
+      <nav class="nav">
+        <a href="index.html">Dự đoán</a>
+        <a href="result.html">Kết quả</a>
+        <a href="dashboard.html" aria-current="page">Dashboard</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Dashboard</h1>
+      <p class="lead">Phân bố dữ liệu Palmer Penguins (sau làm sạch) và thông tin model đang phục vụ.</p>
+      <div id="dash-alert" class="alert error" role="alert"></div>
+
+      <div id="stats" class="grid grid-4"></div>
+
+      <div class="grid grid-2" style="margin-top:16px">
+        <section class="card">
+          <h2>Penguin Species Distribution</h2>
+          <div id="species-chart"></div>
+        </section>
+        <section class="card">
+          <h2>Loài theo đảo</h2>
+          <div class="legend" data-legend></div>
+          <div id="island-chart"></div>
+        </section>
+      </div>
+
+      <section class="card" style="margin-top:16px">
+        <h2>Chiều dài mỏ vs độ dày mỏ</h2>
+        <div class="legend" data-legend></div>
+        <div id="scatter"></div>
+      </section>
+
+      <div class="grid grid-2" style="margin-top:16px">
+        <section class="card">
+          <h2>Trung bình số đo theo loài</h2>
+          <div id="means"></div>
+        </section>
+        <section class="card">
+          <h2>Model</h2>
+          <div id="model"></div>
+        </section>
+      </div>
+    </main>
+
+    <script src="common.js"></script>
+    <script src="dashboard.js"></script>
+  </body>
+</html>

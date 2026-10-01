@@ -1,0 +1,42 @@
+{
+  "model_file": "penguin_pipeline.joblib",
+  "input_features": [
+    "bill_length_mm",
+    "bill_depth_mm",
+    "flipper_length_mm",
+    "body_mass_g",
+    "sex",
+    "island"
+  ],
+  "numeric_features": [
+    "bill_length_mm",
+    "bill_depth_mm",
+    "flipper_length_mm",
+    "body_mass_g"
+  ],
+  "categorical_features": {
+    "sex": [
+      "female",
+      "male"
+    ],
+    "island": [
+      "Biscoe",
+      "Dream",
+      "Torgersen"
+    ]
+  },
+  "classes": [
+    "Adelie",
+    "Chinstrap",
+    "Gentoo"
+  ],
+  "knn": {
+    "n_neighbors": 5,
+    "weights": "distance",
+    "metric": "manhattan"
+  },
+  "n_train": 266,
+  "test_accuracy": 0.9851,
+  "test_macro_f1": 0.9827,
+  "sklearn_version": "1.7.2"
+}

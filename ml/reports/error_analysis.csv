@@ -1,0 +1,7 @@
+case,role,rank,train_index,distance,species,predicted,bill_length_mm,bill_depth_mm,flipper_length_mm,body_mass_g,sex,island
+1,sample,0,,,Adelie,Chinstrap,42.2,18.5,180,3550,female,Dream
+1,neighbor,1,85,0.7787,Chinstrap,,42.4,17.3,181,3600,female,Dream
+1,neighbor,2,107,1.3784,Chinstrap,,46.1,18.2,178,3250,female,Dream
+1,neighbor,3,123,1.4105,Chinstrap,,42.5,17.3,187,3350,female,Dream
+1,neighbor,4,197,1.4521,Adelie,,36.6,18.4,184,3475,female,Dream
+1,neighbor,5,79,1.5305,Adelie,,38.9,18.8,190,3600,female,Dream

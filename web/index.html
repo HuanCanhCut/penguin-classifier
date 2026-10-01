@@ -3,24 +3,84 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Penguin Classifier</title>
+    <title>Dự đoán loài chim cánh cụt</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="card">
-      <p class="eyebrow">Penguin Classifier</p>
-      <h1>Kiểm tra kết nối API</h1>
-      <p class="description">
-        Nhấn nút bên dưới để gọi endpoint health của Flask API.
-      </p>
+    <header class="topbar">
+      <span class="brand">Penguin Classifier</span>
+      <nav class="nav">
+        <a href="index.html" aria-current="page">Dự đoán</a>
+        <a href="result.html">Kết quả</a>
+        <a href="dashboard.html">Dashboard</a>
+      </nav>
+    </header>
 
-      <button id="check-health" type="button">Check API health</button>
-      <output id="result" class="result" aria-live="polite">
-        Chưa kiểm tra
-      </output>
+    <main>
+      <h1>Dự đoán loài</h1>
+      <p class="lead">Nhập số đo của một con chim cánh cụt. Model KNN (đã train offline) sẽ dự đoán loài.</p>
+
+      <div id="form-alert" class="alert error" role="alert"></div>
+      <div id="form-warning" class="alert warn" role="status"></div>
+
+      <form id="predict-form" class="card" novalidate>
+        <div class="form-grid">
+          <div class="field" data-field="bill_length_mm">
+            <label for="bill_length_mm">Chiều dài mỏ (mm)</label>
+            <span class="hint" data-hint>Ví dụ: 45.2</span>
+            <input id="bill_length_mm" name="bill_length_mm" type="number" step="any" inputmode="decimal" required />
+            <div class="message" aria-live="polite"></div>
+          </div>
+          <div class="field" data-field="bill_depth_mm">
+            <label for="bill_depth_mm">Độ dày mỏ (mm)</label>
+            <span class="hint" data-hint>Ví dụ: 17.1</span>
+            <input id="bill_depth_mm" name="bill_depth_mm" type="number" step="any" inputmode="decimal" required />
+            <div class="message" aria-live="polite"></div>
+          </div>
+          <div class="field" data-field="flipper_length_mm">
+            <label for="flipper_length_mm">Chiều dài vây (mm)</label>
+            <span class="hint" data-hint>Ví dụ: 190</span>
+            <input id="flipper_length_mm" name="flipper_length_mm" type="number" step="any" inputmode="decimal" required />
+            <div class="message" aria-live="polite"></div>
+          </div>
+          <div class="field" data-field="body_mass_g">
+            <label for="body_mass_g">Cân nặng (g)</label>
+            <span class="hint" data-hint>Ví dụ: 3650</span>
+            <input id="body_mass_g" name="body_mass_g" type="number" step="any" inputmode="decimal" required />
+            <div class="message" aria-live="polite"></div>
+          </div>
+          <div class="field" data-field="sex">
+            <label for="sex">Giới tính</label>
+            <span class="hint">Model có dùng feature này</span>
+            <select id="sex" name="sex" required>
+              <option value="">— Chọn —</option>
+              <option value="female">Cái (female)</option>
+              <option value="male">Đực (male)</option>
+            </select>
+            <div class="message" aria-live="polite"></div>
+          </div>
+          <div class="field" data-field="island">
+            <label for="island">Đảo</label>
+            <span class="hint">Model có dùng feature này</span>
+            <select id="island" name="island" required>
+              <option value="">— Chọn —</option>
+              <option value="Biscoe">Biscoe</option>
+              <option value="Dream">Dream</option>
+              <option value="Torgersen">Torgersen</option>
+            </select>
+            <div class="message" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="submit" type="submit">Dự đoán</button>
+          <button id="fill-example" class="secondary" type="button">Điền ví dụ</button>
+          <button class="secondary" type="reset">Xoá</button>
+        </div>
+      </form>
     </main>
 
-    <script src="app.js"></script>
+    <script src="common.js"></script>
+    <script src="predict.js"></script>
   </body>
 </html>
-

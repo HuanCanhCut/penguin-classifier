@@ -1,0 +1,7 @@
+{
+  "n_neighbors": 5,
+  "weights": "uniform",
+  "metric": "euclidean",
+  "cv_accuracy": 0.985,
+  "cv_f1_macro": 0.9814
+}

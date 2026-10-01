@@ -1,0 +1,18 @@
+{
+  "n_neighbors": 5,
+  "metric": "manhattan",
+  "weights": "distance",
+  "features": "numeric+sex+island",
+  "numeric_features": [
+    "bill_length_mm",
+    "bill_depth_mm",
+    "flipper_length_mm",
+    "body_mass_g"
+  ],
+  "categorical_features": [
+    "sex",
+    "island"
+  ],
+  "cv_accuracy": 1.0,
+  "cv_f1_macro": 1.0
+}

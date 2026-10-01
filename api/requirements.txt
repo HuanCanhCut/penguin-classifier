@@ -1,2 +1,6 @@
-Flask==3.1.2
-
+fastapi==0.142.2
+uvicorn[standard]==0.54.0
+# Phải trùng phiên bản đã dùng lúc train (xem ml/models/penguin_pipeline.json)
+scikit-learn==1.7.2
+pandas==2.3.3
+joblib==1.6.0

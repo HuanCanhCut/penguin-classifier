@@ -1,0 +1,3 @@
+features,n_neighbors,metric,weights,mean_cv_accuracy,std_cv_accuracy,mean_cv_f1_macro,std_cv_f1_macro
+numeric,5,euclidean,uniform,0.985,0.0075,0.9814,0.0093
+numeric+sex+island,5,manhattan,distance,1.0,0.0,1.0,0.0

@@ -1,47 +1,49 @@
 # Penguin Classifier
 
-Dự án khởi tạo gồm Flask API và giao diện web thuần HTML/CSS/JavaScript.
+Phân loại loài chim cánh cụt (Adelie / Chinstrap / Gentoo) bằng KNN.
+Training chạy offline trong `ml/`; web và API chỉ load Pipeline đã lưu để dự đoán.
 
 ## Cấu trúc
 
 ```text
-api/                 Flask backend
-  app.py             App factory và health endpoint
-  requirements.txt   Dependency chạy ứng dụng
-  requirements-dev.txt
+ml/                  Offline: làm sạch dữ liệu, thí nghiệm, GridSearchCV, train model cuối
+  src/train_final.py   → ml/models/penguin_pipeline.joblib (+ .json metadata)
+api/                 Online: FastAPI, load pipeline khi khởi động
+  app.py             Endpoint, error handler, phục vụ web tĩnh
+  schemas.py         JSON schema request/response (Pydantic)
+  model_service.py   Load pipeline, predict, tìm 5 hàng xóm, thống kê dashboard
   tests/             API tests
-web/                 Static frontend
+  API.md             Tài liệu API + ví dụ request/response
+web/                 3 màn hình HTML/CSS/JS thuần
+  index.html         Dự đoán: form nhập + validation
+  result.html        Kết quả: loài, confidence, 5 hàng xóm gần nhất
+  dashboard.html     Phân bố dữ liệu + thông tin model
 ```
 
-## Chạy backend
+## Cài đặt
 
-Yêu cầu Python 3.10 trở lên.
+Yêu cầu Python 3.10+. Dùng chung `.venv` ở gốc repo:
 
 ```bash
-python3 -m venv api/.venv
-source api/.venv/bin/activate
-pip install -r api/requirements-dev.txt
-python3 -m api.app
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r ml/requirements.txt -r api/requirements-dev.txt
 ```
 
-API mặc định chạy tại `http://localhost:5000`. Kiểm tra trực tiếp:
+## Train model (offline, chỉ cần khi muốn train lại)
 
 ```bash
-curl http://localhost:5000/api/health
+python ml/src/train_final.py
 ```
 
-Có thể cấu hình bằng các biến môi trường `HOST`, `PORT`, `FLASK_DEBUG` và
-`CORS_ORIGIN`.
-
-## Chạy frontend
-
-Mở terminal khác tại thư mục gốc dự án:
+## Chạy web + API
 
 ```bash
-python3 -m http.server 8000 --directory web
+python -m api.app
 ```
 
-Truy cập `http://localhost:8000`, sau đó nhấn **Check API health**.
+Mở `http://localhost:8000` (web), `http://localhost:8000/docs` (Swagger / JSON schema).
+Biến môi trường: `HOST`, `PORT`, `RELOAD=1`, `MODEL_PATH`, `CORS_ORIGIN`.
 
 ## Chạy test
 

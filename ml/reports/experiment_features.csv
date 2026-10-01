@@ -1,0 +1,3 @@
+Feature set,Accuracy,Accuracy std,Macro-F1,Macro-F1 std
+Numeric only,0.985,0.0075,0.9814,0.0093
+Numeric + sex + island,0.9925,0.0092,0.9911,0.0109
