@@ -26,32 +26,13 @@
   color: var(--text);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --bg: #111416;
-    --surface: #1a1d20;
-    --surface-2: #22262a;
-    --border: #2e3439;
-    --text: #f1f3f5;
-    --text-2: #c3c9ce;
-    --muted: #8d979f;
-    --accent: #2fa3b3;
-    --accent-hover: #46b6c5;
-    --grid: #2a2f33;
-    --adelie: #3987e5;
-    --chinstrap: #d95926;
-    --gentoo: #199e70;
-    --error: #ff8a8a;
-    --error-bg: #3a1c1c;
-    --warn: #f2c46b;
-    --warn-bg: #3a2e14;
-    --ok: #7fd9a0;
-    --ok-bg: #183424;
-  }
-}
-
 * { box-sizing: border-box; }
+
+html {
+  color-scheme: light;
+  background: var(--bg);
+  color: var(--text);
+}
 
 body {
   margin: 0;
