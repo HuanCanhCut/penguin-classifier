@@ -111,17 +111,28 @@ function renderMeans(stats) {
     el("div", { class: "table-wrap" }, el("table", {}, el("thead", {}, head), el("tbody", {}, ...rows, range))));
 }
 
+const METRIC_LABELS = {
+  manhattan: "Khoảng cách Manhattan",
+  euclidean: "Khoảng cách Euclidean",
+  minkowski: "Khoảng cách Minkowski",
+};
+
+const WEIGHT_LABELS = {
+  distance: "Nghịch đảo khoảng cách (distance)",
+  uniform: "Đồng đều (uniform)",
+};
+
 function renderModel(info) {
   const metrics = info.metrics;
   const items = [
-    ["Thuật toán", "K-Nearest Neighbors"],
-    ["k (n_neighbors)", info.knn.n_neighbors],
-    ["Metric", info.knn.metric],
-    ["Weights", info.knn.weights],
-    ["Features", info.input_features.join(", ")],
-    ["Số mẫu train", info.n_train],
-    ["File model", info.model_file],
-    ["scikit-learn", info.sklearn_version],
+    ["Thuật toán", "K-Nearest Neighbors (KNN)"],
+    ["k (số láng giềng)", info.knn.n_neighbors],
+    ["Độ đo khoảng cách", METRIC_LABELS[info.knn.metric] || info.knn.metric],
+    ["Trọng số", WEIGHT_LABELS[info.knn.weights] || info.knn.weights],
+    ["Đặc trưng đầu vào", info.input_features.map((f) => FIELD_LABELS[f] || f).join(", ")],
+    ["Số mẫu huấn luyện", `${info.n_train} mẫu`],
+    ["Tập tin mô hình", info.model_file],
+    ["Phiên bản scikit-learn", info.sklearn_version],
   ];
   const children = [el("div", { class: "table-wrap" }, el("table", {}, el("tbody", {},
     ...items.map(([k, v]) => el("tr", {}, el("th", {}, k), el("td", {}, String(v))))))),
@@ -129,13 +140,13 @@ function renderModel(info) {
 
   if (metrics?.confusion_matrix) {
     const labels = metrics.labels;
-    const head = el("tr", {}, el("th", {}, "Thực tế \\ Dự đoán"), ...labels.map((l) => el("th", { class: "num" }, l)));
+    const head = el("tr", {}, el("th", {}, "Thực tế \\ Dự đoán"), ...labels.map((l) => el("th", { class: "num" }, speciesLabel(l))));
     const rows = metrics.confusion_matrix.map((row, i) => el("tr", {},
       el("td", {}, speciesLabel(labels[i])),
       ...row.map((n, j) => el("td", { class: "num", style: i === j ? "font-weight:700" : n ? "color:var(--error);font-weight:700" : "" }, String(n))),
     ));
     children.push(
-      el("h2", { style: "margin-top:20px" }, `Confusion matrix (tập test, ${metrics.n_test} mẫu)`),
+      el("h2", { style: "margin-top:20px" }, `Ma trận nhầm lẫn (Confusion Matrix - tập kiểm tra, ${metrics.n_test} mẫu)`),
       el("div", { class: "table-wrap" }, el("table", {}, el("thead", {}, head), el("tbody", {}, ...rows))),
     );
   }
@@ -149,9 +160,9 @@ async function main() {
     const [stats, info] = await Promise.all([apiFetch("/api/stats"), apiFetch("/api/model-info")]);
     document.querySelector("#stats").replaceChildren(
       statTile("Số mẫu (sau làm sạch)", String(stats.n_samples)),
-      statTile("Test accuracy", percent(info.test_accuracy, 1), `${info.metrics?.n_test ?? "?"} mẫu test`),
-      statTile("Test macro-F1", percent(info.test_macro_f1, 1)),
-      statTile("Model", `KNN k=${info.knn.n_neighbors}`, `${info.knn.metric}, ${info.knn.weights}`),
+      statTile("Độ chính xác (Test accuracy)", percent(info.test_accuracy, 1), `${info.metrics?.n_test ?? "?"} mẫu kiểm tra`),
+      statTile("Macro-F1 (tập kiểm tra)", percent(info.test_macro_f1, 1)),
+      statTile("Mô hình", `KNN (k=${info.knn.n_neighbors})`, `${info.knn.metric}, trọng số ${info.knn.weights}`),
     );
     renderSpecies(stats);
     renderIslands(stats);

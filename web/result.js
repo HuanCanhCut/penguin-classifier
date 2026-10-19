@@ -61,23 +61,23 @@ function render(result) {
   content.replaceChildren(
     el("h1", {}, "Kết quả dự đoán"),
     el("p", { class: "lead" }, "Dựa trên 5 con chim gần nhất trong tập train (KNN, khoảng cách Manhattan sau chuẩn hoá)."),
-    warnings.length
-      ? el("div", { class: "alert warn", role: "status" },
+    ...(warnings.length
+      ? [el("div", { class: "alert warn", role: "status" },
           el("strong", {}, "Lưu ý: dữ liệu nhập có giá trị bất thường"),
-          el("ul", {}, ...warnings.map((w) => el("li", {}, `${FIELD_LABELS[w.field] || w.field}: ${w.message}`))))
-      : null,
+          el("ul", {}, ...warnings.map((w) => el("li", {}, `${FIELD_LABELS[w.field] || w.field}: ${w.message}`))))]
+      : []),
     el("div", { class: "grid grid-2" },
       el("section", { class: "card" },
         el("div", { class: "hero" },
           el("div", {},
-            el("div", { class: "label" }, "Predicted species"),
+            el("div", { class: "label" }, "Loài dự đoán"),
             el("div", { class: `value sp-${result.prediction}` }, el("span", { class: "swatch", style: "width:18px;height:18px;border-radius:5px" }), result.prediction),
             el("div", { class: "muted" }, `Độ tin cậy ${percent(top)} · ${result.neighbor_votes[result.prediction]}/5 hàng xóm cùng loài`),
           ),
         ),
       ),
       el("section", { class: "card" },
-        el("h2", {}, "Confidence theo hàng xóm"),
+        el("h2", {}, "Độ tin cậy theo hàng xóm"),
         confidenceBars(result.confidence, result.neighbor_votes),
         el("p", { class: "small muted" }, "Mỗi hàng xóm bỏ phiếu với trọng số 1/khoảng cách, nên hàng xóm gần hơn có tiếng nói lớn hơn."),
       ),

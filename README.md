@@ -22,7 +22,30 @@ web/                 3 màn hình HTML/CSS/JS thuần
 
 ## Cài đặt
 
-Yêu cầu Python 3.10+. Dùng chung `.venv` ở gốc repo:
+Yêu cầu Python 3.10+ (khi cài trên Windows, hãy tích chọn **"Add python.exe to PATH"**). Dùng chung một virtualenv `.venv` ở gốc repo:
+
+### Trên Windows
+
+- **PowerShell**:
+  ```powershell
+  python -m venv .venv
+  .venv\Scripts\Activate.ps1
+  pip install -r ml/requirements.txt -r api/requirements-dev.txt
+  ```
+  > **Lưu ý (PowerShell):** Nếu gặp lỗi `running scripts is disabled on this system`, hãy mở PowerShell và chạy:
+  > ```powershell
+  > Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+  > ```
+  > Sau đó chạy lại lệnh kích hoạt `.venv\Scripts\Activate.ps1`.
+
+- **Command Prompt (CMD)**:
+  ```cmd
+  python -m venv .venv
+  .venv\Scripts\activate.bat
+  pip install -r ml/requirements.txt -r api/requirements-dev.txt
+  ```
+
+### Trên Linux / macOS
 
 ```bash
 python3 -m venv .venv
@@ -32,20 +55,44 @@ pip install -r ml/requirements.txt -r api/requirements-dev.txt
 
 ## Train model (offline, chỉ cần khi muốn train lại)
 
+Đảm bảo đã kích hoạt môi trường ảo `.venv`, sau đó chạy:
+
 ```bash
 python ml/src/train_final.py
 ```
 
 ## Chạy web + API
 
+Khởi động server (sau khi đã kích hoạt `.venv`):
+
 ```bash
 python -m api.app
 ```
 
-Mở `http://localhost:8000` (web), `http://localhost:8000/docs` (Swagger / JSON schema).
-Biến môi trường: `HOST`, `PORT`, `RELOAD=1`, `MODEL_PATH`, `CORS_ORIGIN`.
+Mở trình duyệt:
+- Web: `http://localhost:8000`
+- Swagger / JSON schema: `http://localhost:8000/docs`
+
+Các biến môi trường: `HOST`, `PORT`, `RELOAD=1`, `MODEL_PATH`, `CORS_ORIGIN`.
+
+**Cách chạy kèm biến môi trường (ví dụ bật auto-reload `RELOAD=1`):**
+
+- **Windows (PowerShell)**:
+  ```powershell
+  $env:RELOAD="1"; python -m api.app
+  ```
+- **Windows (CMD)**:
+  ```cmd
+  set RELOAD=1 && python -m api.app
+  ```
+- **Linux / macOS**:
+  ```bash
+  RELOAD=1 python -m api.app
+  ```
 
 ## Chạy test
+
+Đảm bảo đã kích hoạt `.venv`:
 
 ```bash
 pytest

@@ -86,10 +86,24 @@ train_final.py → models/penguin_pipeline.joblib (backend load file này)
 
 ### Chạy lại toàn bộ
 
-Từ thư mục gốc repo:
+Từ thư mục gốc repo, kích hoạt môi trường ảo:
+
+- **Linux / macOS**:
+  ```bash
+  source .venv/bin/activate
+  ```
+- **Windows (PowerShell)**:
+  ```powershell
+  .venv\Scripts\Activate.ps1
+  ```
+- **Windows (CMD)**:
+  ```cmd
+  .venv\Scripts\activate.bat
+  ```
+
+Sau đó chạy lần lượt các script (áp dụng cho cả Windows và Linux/macOS):
 
 ```bash
-source .venv/bin/activate
 python ml/src/check_data.py
 python ml/src/clean_data.py
 python ml/src/prepare_data.py
